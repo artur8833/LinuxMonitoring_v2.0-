@@ -11,7 +11,8 @@ then
     echo "Параметр 6 - размер файлов (в килобайтах, но не более 100)."
 else 
     absolut_path="$1"
+    source valid.sh 
 fi
 
-source valid.sh 
+
 
