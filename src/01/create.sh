@@ -8,8 +8,6 @@ filename=$(echo $5 | cut -d. -f1)
 len_filename=$(echo -n "$filename" | wc -m)
 file_extension=$(echo $5 | cut -d. -f2)
 
-echo "file_extension=$file_extension"
-
 middle_position_for_folder=0
 start_position_for_folder=1
 last_position_for_folder=1
@@ -48,7 +46,7 @@ len_filename=$(echo -n "$filename" | wc -m)
 
 for (( i=1; i<=$2; i++ ))
 do
-  if (((($len_foldername+7))>=255))
+  if (((($len_foldername+7))>=248))
     then 
         ((count_for_folder++))
         
@@ -72,7 +70,7 @@ do
     
     for ((j=1;j<=$4;j++))
     do 
-        if (((($len_filename+7))>=255))
+        if (((($len_filename+7))>=248))
         then 
             ((count_for_filename++))
             filename=$(echo $5 | cut -d. -f1)
