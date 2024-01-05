@@ -16,11 +16,9 @@ do
     ((len_filename++))
 done
 
-echo "filename==$filename, len_filename==$len_filename"
-
 for (( i=1; i<=$2 ; i++ ))
 do
-    if (($len_filename>116))
+    if (((($len_filename+7))>=255))
     then 
         ((j++))
         len_filename=$(echo -n "$3" | wc -m)
@@ -37,5 +35,4 @@ do
     mkdir "$filename"_"$date" ; cd "$filename"_"$date"
     filename="${filename:0:start_position}${filename:middle_position:1}${filename:last_position:len_filename}"
     ((len_filename++))
-    echo "$i"
 done
