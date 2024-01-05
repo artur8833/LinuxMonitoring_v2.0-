@@ -18,4 +18,6 @@ then
 elif [[ ! "$6" =~ ^[0-9]*kb$ ]]
 then
     echo "в параметре 6 задайте размер в kb"
+else
+    source create.sh
 fi
