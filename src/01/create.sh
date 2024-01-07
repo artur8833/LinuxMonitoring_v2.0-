@@ -12,8 +12,13 @@ len_filename=$(echo -n "$filename" | wc -m)
 # echo "$foldername"
 # echo "$len_foldername"
 
-start_position=1
-last_position=1
+middle_position_for_folder=0
+start_position_for_folder=1
+last_position_for_folder=1
+
+middle_position_for_filename=0
+start_position_for_filename=1
+last_position_for_filename=1
 
 # функция приведения названия к 4 символам 
 function addWords() {
@@ -29,68 +34,61 @@ function addWords() {
 
 function CreateName(){
     name=$1
-    len=$2
-    if (((($2+7))>=255))
-    then 
-        ((count++))
-        len=$(echo -n "$3" | wc -m)
-        foldername=$3
-        ((middle_position++))
-
-        if((count>1))
-        then 
-            ((start_position++))
-            ((last_position++))
-        fi
-    fi
-    name="${name:0:start_position}${name:middle_position:1}${name:last_position:len_foldername}"
-    ((len++))
+    start_position=$2
+    middle_position=$3
+    last_position=$4
+    len=$5
+    name="${name:0:start_position}${name:middle_position:1}${name:last_position:len}"
     echo "$name"
 }
 
-addWords "$len_foldername" "$foldername"
-echo "foldername= $foldername"
-echo "len_foldername= $len_foldername"
-# filename=$(addWords $len_filename $filename)
-# echo "filename= $filename"
-# echo "len_filename= $len_filename"
+foldername=$(addWords $len_foldername $foldername)
+len_foldername=$(echo -n "$foldername" | wc -m)
 
-
-
-
-# рабоатет 
+filename=$(addWords $len_filename $filename)
+len_filename=$(echo -n "$filename" | wc -m)
 
 for (( i=1; i<=$2; i++ ))
 do
+  if (((($len_foldername+7))>=255))
+    then 
+        ((count_for_folder++))
+        
+        len_foldername=$(echo -n "$3" | wc -m)
+        foldername=$3
+        ((middle_position_for_folder++))
 
-    # if (((($len_foldername+7))>=255))
-    # then 
-    #     ((count++))
-    #     len_foldername=$(echo -n "$3" | wc -m)
-    #     foldername=$3
-    #     ((middle_position++))
+        if((count_for_folder>1))
+        then 
+            ((start_position_for_folder++))
+            ((last_position_for_folder++))
+        fi
+    fi
 
-    #     if((count>1))
-    #     then 
-    #         ((start_position++))
-    #         ((last_position++))
-    #     fi
-    # fi
+    if (((($len_filename+7))>=255))
+    then 
+        ((count_for_filename++))
+        filename=$(echo $5 | cut -d. -f1)
+        len_filename=$(echo -n "$filename" | wc -m)
+        ((middle_position_for_filename++))
 
+        if((count_for_filename>1))
+        then 
+            ((start_position_for_filename++))
+            ((last_position_for_filename++))
+        fi
+    fi
 
+    foldername=$(CreateName $foldername $start_position_for_folder $middle_position_for_folder $last_position_for_folder $len_foldername)
+    len_foldername=$(echo -n "$foldername" | wc -m)
 
-    # mkdir "$foldername"_"$date" ; cd "$foldername"_"$date"
-    foldername=$(CreateName $foldername $len_foldername)
-
-    filename=$(CreateName $filename)
+    mkdir "$foldername"_"$date" ; cd "$foldername"_"$date"
     
-    
-    # foldername="${foldername:0:start_position}${foldername:middle_position:1}${foldername:last_position:len_foldername}"
-    # echo "$foldername"
-    # echo "$len_foldername"
-    # echo "$filename"
-    # ((len_foldername++))
-done
+    filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
+    len_filename=$(echo -n "$filename" | wc -m) 
 
+    
+
+done 
 
 
