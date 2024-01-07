@@ -6,11 +6,9 @@ date=$(date "+%d%m%y")
 
 filename=$(echo $5 | cut -d. -f1)
 len_filename=$(echo -n "$filename" | wc -m)
+file_extension=$(echo $5 | cut -d. -f2)
 
-# echo "$filename"
-# echo "$len_filename"
-# echo "$foldername"
-# echo "$len_foldername"
+echo "file_extension=$file_extension"
 
 middle_position_for_folder=0
 start_position_for_folder=1
@@ -65,29 +63,35 @@ do
         fi
     fi
 
-    if (((($len_filename+7))>=255))
-    then 
-        ((count_for_filename++))
-        filename=$(echo $5 | cut -d. -f1)
-        len_filename=$(echo -n "$filename" | wc -m)
-        ((middle_position_for_filename++))
 
-        if((count_for_filename>1))
-        then 
-            ((start_position_for_filename++))
-            ((last_position_for_filename++))
-        fi
-    fi
 
     foldername=$(CreateName $foldername $start_position_for_folder $middle_position_for_folder $last_position_for_folder $len_foldername)
     len_foldername=$(echo -n "$foldername" | wc -m)
 
     mkdir "$foldername"_"$date" ; cd "$foldername"_"$date"
     
-    filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
-    len_filename=$(echo -n "$filename" | wc -m) 
+    for ((j=1;j<=$4;j++))
+    do 
+        if (((($len_filename+7))>=255))
+        then 
+            ((count_for_filename++))
+            filename=$(echo $5 | cut -d. -f1)
+            len_filename=$(echo -n "$filename" | wc -m)
+            ((middle_position_for_filename++))
 
-    
+            if((count_for_filename>1))
+            then 
+                ((start_position_for_filename++))
+                ((last_position_for_filename++))
+            fi
+        fi
+
+        filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
+        len_filename=$(echo -n "$filename" | wc -m)
+        
+        fallocate -l 2K "$filename"."$file_extension"_"$date"
+        
+    done
 
 done 
 
