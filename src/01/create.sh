@@ -8,6 +8,8 @@ filename=$(echo $5 | cut -d. -f1)
 len_filename=$(echo -n "$filename" | wc -m)
 file_extension=$(echo $5 | cut -d. -f2)
 
+size_file=$(echo "$6" | grep -o '^[0-9]*')
+
 middle_position_for_folder=0
 start_position_for_folder=1
 last_position_for_folder=1
@@ -15,6 +17,8 @@ last_position_for_folder=1
 middle_position_for_filename=0
 start_position_for_filename=1
 last_position_for_filename=1
+
+echo "size_file==$size_file"
 
 # функция приведения названия к 4 символам 
 function addWords() {
@@ -87,10 +91,8 @@ do
         filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
         len_filename=$(echo -n "$filename" | wc -m)
         
-        fallocate -l 2K "$filename"."$file_extension"_"$date"
+        fallocate -l "$size_file"KB "$filename"."$file_extension"_"$date"
         
     done
 
 done 
-
-
