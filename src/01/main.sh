@@ -1,4 +1,5 @@
 #!/bin/bash
+export log_file="$(pwd)/1.log"
 
 if ! [ -n "$6" ]
 then 

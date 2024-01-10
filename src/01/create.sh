@@ -69,7 +69,10 @@ do
     foldername=$(CreateName $foldername $start_position_for_folder $middle_position_for_folder $last_position_for_folder $len_foldername)
     len_foldername=$(echo -n "$foldername" | wc -m)
 
-    mkdir "$foldername"_"$date" ; cd "$foldername"_"$date"
+    mkdir "$foldername"_"$date" ; cd "$foldername"_"$date" 
+    
+    echo -e "$(pwd) $date" >> $log_file
+    
     Free_space_KB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
     for ((j=1;j<=$4 && Free_space_KB > 1;j++))
     do 
@@ -91,6 +94,7 @@ do
         len_filename=$(echo -n "$filename" | wc -m)
         
         fallocate -l "$size_file"KB "$filename"."$file_extension"_"$date"
+        echo -e "$(pwd)/$filename"."$file_extension $date $size_file"kb"" >> $log_file
         Free_space_MB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
         
     done
