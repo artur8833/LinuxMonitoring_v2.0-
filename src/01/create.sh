@@ -18,7 +18,7 @@ middle_position_for_filename=0
 start_position_for_filename=1
 last_position_for_filename=1
 
-echo "size_file==$size_file"
+Free_space_KB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
 
 # функция приведения названия к 4 символам 
 function addWords() {
@@ -48,8 +48,9 @@ len_foldername=$(echo -n "$foldername" | wc -m)
 filename=$(addWords $len_filename $filename)
 len_filename=$(echo -n "$filename" | wc -m)
 
-for (( i=1; i<=$2; i++ ))
+for (( i=1; i<=$2 && Free_space_KB > 1; i++ ))
 do
+
   if (((($len_foldername+7))>=248))
     then 
         ((count_for_folder++))
@@ -65,14 +66,12 @@ do
         fi
     fi
 
-
-
     foldername=$(CreateName $foldername $start_position_for_folder $middle_position_for_folder $last_position_for_folder $len_foldername)
     len_foldername=$(echo -n "$foldername" | wc -m)
 
     mkdir "$foldername"_"$date" ; cd "$foldername"_"$date"
-    
-    for ((j=1;j<=$4;j++))
+    Free_space_KB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
+    for ((j=1;j<=$4 && Free_space_KB > 1;j++))
     do 
         if (((($len_filename+7))>=248))
         then 
@@ -92,7 +91,7 @@ do
         len_filename=$(echo -n "$filename" | wc -m)
         
         fallocate -l "$size_file"KB "$filename"."$file_extension"_"$date"
+        Free_space_MB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
         
     done
-
 done 
