@@ -1,0 +1,13 @@
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test4
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test3
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaaaaaaaaaaaaaaaaaaaaaaaaaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaaaaaaaaaaaaaaaaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaaaaaaaaaaaaaaaaaaaaaaaaaaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaaaaaaaaaaaaaaaaaaaaaaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test2/test2 2/aaaaaabccc_140124
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test1
+/home/artur/school/DO4_LinuxMonitoring_v2.0-1/src/test/test1/test1_1
