@@ -55,12 +55,6 @@ len_filename=$(echo -n "$filename" | wc -m)
 
 Free_space_GB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
 
-for path in "${all_path[@]}"
-do
-    echo "$path">>text.txt
-done
-
-
 while [ $Free_space_GB -gt 1 ]
 do
     random_folder=$(shuf -i 0-$arr_size -n1)
@@ -90,41 +84,39 @@ do
 
     if (((($current_folder))<100))
     then
-        # echo "$random_folder"
-        # echo "${all_path[$random_folder]}" 
         cd "${all_path[$random_folder]}"
-        # mkdir "$foldername"_"$date"
+        mkdir "$foldername"_"$date"
+        cd "$foldername"_"$date"
         echo "$(pwd)/$foldername"_"$date" >> $log_file
+
+        for ((j=1;j<=$random_file && Free_space_GB > 1;j++))
+        do 
+            if (((($len_filename+7))>=248))
+            then 
+                ((count_for_filename++))
+                filename=$(echo $2 | cut -d. -f1)
+                len_filename=$(echo -n "$filename" | wc -m)
+                ((middle_position_for_filename++))
+                
+                if((count_for_filename>1))
+                then 
+                    ((start_position_for_filename++))
+                    ((last_position_for_filename++))
+                fi
+            fi
+            
+            filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
+            len_filename=$(echo -n "$filename" | wc -m)
+            fallocate -l "$size_file"KB "$filename"."$file_extension"_"$date"
+            echo -e "$(pwd)/$filename"."$file_extension"_"$date  $date  $size_file"kb"" >> $log_file
+            Free_space_GB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
+        done
+
     fi
 
     Free_space_GB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
 
-    # echo "Free_space_GB==$Free_space_GB"
-
-    for ((j=1;j<=$random_file && Free_space_GB > 1;j++))
-    do 
-        if (((($len_filename+7))>=248))
-        then 
-            ((count_for_filename++))
-            filename=$(echo $2 | cut -d. -f1)
-            len_filename=$(echo -n "$filename" | wc -m)
-            ((middle_position_for_filename++))
-
-            if((count_for_filename>1))
-            then 
-                ((start_position_for_filename++))
-                ((last_position_for_filename++))
-            fi
-        fi
-
-        filename=$(CreateName $filename $start_position_for_filename $middle_position_for_filename $last_position_for_filename $len_filename)
-        len_filename=$(echo -n "$filename" | wc -m)
-        echo "filename==$filename"
-        # fallocate -l "$size_file"KB "$filename"."$file_extension"_"$date"
-        echo -e "$(pwd)/$filename"."$file_extension"_"$date  $date  $size_file"kb"" >> $log_file
-        Free_space_GB=$(df -h / | tail +2 | head -2 | awk '{printf("%d", $4)}')
-
-    done
+    echo "Free_space_GB==$Free_space_GB"
 done
 
 
