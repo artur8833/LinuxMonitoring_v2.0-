@@ -373,3 +373,7 @@
 199.80.170.73 - - [31/01/2024:05:29:07] "POST http://www.random.com/950)" 500 Microsoft Edge
 141.194.154.243 - - [31/01/2024:05:23:36] "POST http://www.random.com/624)" 500 Library and net tool
 13.135.177.252 - - [31/01/2024:05:35:23] "PUT http://www.random.com/348)" 500 Internet Explorer
+13.135.177.252 - - [31/01/2024:05:35:23] "PUT http://www.random.com/348)" 500 Internet Explorer
+13.135.177.252 - - [31/01/2024:05:35:23] "PUT http://www.random.com/348)" 500 Internet Explorer
+13.135.177.252 - - [31/01/2024:05:35:23] "PUT http://www.random.com/348)" 500 Internet Explorer
+13.135.177.252 - - [31/01/2024:05:35:23] "PUT http://www.random.com/348)" 500 Internet Explorer
